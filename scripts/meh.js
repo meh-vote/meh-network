@@ -593,6 +593,19 @@ const ABI = [
 ]
 
 document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('background-audio');
+
+    function playAudio() {
+        audio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+        });
+        document.removeEventListener('click', playAudio);
+        document.removeEventListener('touchstart', playAudio);
+    }
+
+    document.addEventListener('click', playAudio);
+    document.addEventListener('touchstart', playAudio);
+
     setTimeout(createButton, 2500);
 });
 
@@ -602,7 +615,7 @@ async function createButton() {
     button.classList.add('sign-button');
     button.addEventListener('click', () => {
         button.innerHTML = '<img src="/images/meh_btn_pressed.png" alt="SIGN">';
-        callSignAd();
+        signAd();
     });
 
     if (window.innerWidth <= 600) {
