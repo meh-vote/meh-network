@@ -592,10 +592,10 @@ const ABI = [
     }
 ]
 
-
 async function createButton() {
     // count up
-    displayMeh();
+    await displayMeh();
+    await checkDesiredChain();
 
     const button = document.createElement('button');
     button.innerText = `SIGN AD`;
@@ -651,4 +651,24 @@ function animateCountUp(target) {
     }, 100);
 }
 
-
+async function checkDesiredChain(_chainId = '0x2105') {
+    await window.ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
+        currChain = chainId;
+    });
+    if (_chainId != currChain) {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: _chainId }]
+        }).then((out) => {
+            window.location.reload();
+        }).catch((e) => {
+            if (e.code === 4902) {
+                // When we want to get a step fancier, 
+                //   helpChain(_chainId);
+                console.error(`You will need to add chain ${_chainId}`);
+            }
+            throw new Error("Could not connect to a supported network");
+        });
+    };
+    return _chainId;
+}
