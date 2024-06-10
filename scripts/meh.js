@@ -1,5 +1,5 @@
 // MEH
-const MEH_AD_V1 = "0xE07e62cD3D1717604A9392bE15E54E5094850252"
+const MEH_AD_V1 = "0x63078227a4f20b1335B7DFFB5085dAC7c5A4759A"
 const EMPTY_PROOF = ["0x0000000000000000000000000000000000000000000000000000000000000000"];
 const ABI = [
     {
@@ -638,4 +638,34 @@ async function signAd() {
     } catch (error) {
         console.error(error);
     }
+}
+
+async function displayMeh() {
+    try {
+        const web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const mehAd = new web3.eth.Contract(ABI, MEH_AD_V1);
+
+        const result = await mehAd.methods.adAmt().call({ from: accounts[0] });
+        const tokens = result[0] / 10 ** 18; // Convert result to tokens
+        animateCountUp(tokens);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function animateCountUp(target) {
+    let current = 0;
+    const increment = target / 100; // Divide the target into 100 steps
+    const countUpElement = document.getElementById('count-up');
+
+    const interval = setInterval(() => {
+        if (current >= target) {
+            clearInterval(interval);
+        } else {
+            current += increment;
+            countUpElement.innerText = current.toFixed(2); // Display 2 decimal places
+        }
+    }, 10);
 }
