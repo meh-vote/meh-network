@@ -593,23 +593,14 @@ const ABI = [
 ]
 
 document.addEventListener('DOMContentLoaded', () => {
-    const audio = document.getElementById('background-audio');
-
-    function playAudio() {
-        audio.play().catch(error => {
-            console.error('Audio playback failed:', error);
-        });
-        document.removeEventListener('click', playAudio);
-        document.removeEventListener('touchstart', playAudio);
-    }
-
-    document.addEventListener('click', playAudio);
-    document.addEventListener('touchstart', playAudio);
 
     setTimeout(createButton, 2500);
 });
 
 async function createButton() {
+    // count up
+    displayMeh();
+
     const button = document.createElement('button');
     button.innerHTML = '<img src="/images/meh_btn.png" alt="SIGN">';
     button.classList.add('sign-button');
@@ -645,10 +636,8 @@ async function displayMeh() {
         const web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
-        const mehAd = new web3.eth.Contract(ABI, MEH_AD_V1);
-
-        const result = await mehAd.methods.adAmt().call({ from: accounts[0] });
-        const tokens = result[0] / 10 ** 18; // Convert result to tokens
+        const ethBalance = await web3.eth.getBalance(accounts[0]);
+        const tokens = 25000 + ((ethBalance / 10**18) * 25000);
         animateCountUp(tokens);
     } catch (error) {
         console.error(error);
@@ -656,7 +645,7 @@ async function displayMeh() {
 }
 
 function animateCountUp(target) {
-    let current = 0;
+    let current = 25000;
     const increment = target / 100; // Divide the target into 100 steps
     const countUpElement = document.getElementById('count-up');
 
@@ -665,7 +654,8 @@ function animateCountUp(target) {
             clearInterval(interval);
         } else {
             current += increment;
-            countUpElement.innerText = current.toFixed(2); // Display 2 decimal places
+            countUpElement.innerText = current.toFixed(0) + " MEH";
         }
     }, 10);
 }
+
