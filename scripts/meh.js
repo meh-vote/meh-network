@@ -602,19 +602,15 @@ async function createButton() {
     displayMeh();
 
     const button = document.createElement('button');
-    button.innerHTML = '<img src="/images/meh_btn.png" alt="SIGN">';
+    button.innerText = `SIGN AD`;
     button.classList.add('sign-button');
     button.addEventListener('click', () => {
-        button.innerHTML = '<img src="/images/meh_btn_pressed.png" alt="SIGN">';
+        button.innerText = `SIGNED`;
         signAd();
     });
 
-    if (window.innerWidth <= 600) {
-        document.body.appendChild(button); // Append to body on mobile
-    } else {
-        const overlay = document.querySelector('.overlay');
-        overlay.appendChild(button); // Append to overlay on larger screens
-    }
+        const signDiv = document.getElementById('sign_ad');
+        signDiv.insertAdjacentElement('afterbegin', button); // Append to overlay on larger screens
 }
 
 async function signAd() {
@@ -637,7 +633,7 @@ async function displayMeh() {
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
         const ethBalance = await web3.eth.getBalance(accounts[0]);
-        const tokens = 25000 + ((ethBalance / 10**18) * 25000);
+        const tokens = 25000 + ((ethBalance / 10 ** 18) * 25000);
         animateCountUp(tokens);
     } catch (error) {
         console.error(error);
@@ -654,8 +650,8 @@ function animateCountUp(target) {
             clearInterval(interval);
         } else {
             current += increment;
-            countUpElement.innerText = current.toFixed(0) + " MEH";
+            countUpElement.innerText = `${current.toLocaleString(undefined, { maximumFractionDigits: 0 })} MEH`;
         }
-    }, 10);
+    }, 100);
 }
 
