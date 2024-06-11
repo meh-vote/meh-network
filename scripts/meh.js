@@ -652,6 +652,15 @@ function animateCountUp(target) {
 }
 
 async function checkDesiredChain(_chainId = '0x2105') {
+    Toastify({
+        text: "Could not connect to a supported network. Please connect your wallet to the base network.",
+        duration: 3000,
+        gravity: "top", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        backgroundColor: "#000000",
+    }).showToast();
+
+
     await window.ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
         currChain = chainId;
     });
@@ -666,8 +675,22 @@ async function checkDesiredChain(_chainId = '0x2105') {
                 // When we want to get a step fancier, 
                 //   helpChain(_chainId);
                 console.error(`You will need to add chain ${_chainId}`);
+                Toastify({
+                    text: "You will need to add the base chain to your wallet to sign the ad.",
+                    duration: 3000,
+                    gravity: "top", // `top` or `bottom`
+                    position: "center", // `left`, `center` or `right`
+                    backgroundColor: "#ffffff",
+                }).showToast();
             }
-            throw new Error("Could not connect to a supported network");
+
+            Toastify({
+                text: "Could not connect to a supported network. Please connect your wallet to the base network.",
+                duration: 3000,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                backgroundColor: "#ffffff",
+            }).showToast();
         });
     };
     return _chainId;
