@@ -90,3 +90,25 @@ body {
         padding:1rem;
     }
 }
+
+.start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1; /* Ensure start screen is above video */
+}
+
+.start-button {
+    cursor: pointer;
+    padding: 20px 40px;
+    background-color: #fff;
+    color: #000;
+    font-size: 24px;
+    border-radius: 10px;
+}

@@ -592,10 +592,6 @@ const ABI = [
     }
 ]
 
-document.addEventListener('DOMContentLoaded', () => {
-
-    setTimeout(createButton, 2500);
-});
 
 async function createButton() {
     // count up
@@ -654,4 +650,5 @@ function animateCountUp(target) {
         }
     }, 100);
 }
+
 

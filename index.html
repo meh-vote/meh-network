@@ -12,18 +12,30 @@
 </head>
 
 <body>
-    <div class="video-container">
-        <video autoplay muted loop id="video-background">
-            <source src="./meh-network.mp4" type="video/mp4">
-        </video>
-        <!--<audio id="background-audio" src="love-missile-f1-11.mp3"></audio>-->
-        <div class="overlay">
-            <img src="meh.png" alt="Meh Logo" class="logo">
-            <div id="sign_ad">
-                <div id="count-up" class="count-up">25,000 MEH</div>
-            </div>
+<div class="video-container">
+    <video id="video-background" preload="metadata">
+        <source src="./sigue-sigue-sputnik.mp4" type="video/mp4">
+    </video>
+    <div class="overlay">
+        <img src="meh.png" alt="Meh Logo" class="logo">
+        <div id="sign_ad">
+            <div id="count-up" class="count-up">25,000 MEH</div>
         </div>
     </div>
+</div>
+<div class="start-screen" id="startScreen">
+    <div class="start-button" id="startButton">Play</div>
+</div>
+<script>
+    document.getElementById('startButton').addEventListener('click', function() {
+        var video = document.getElementById('video-background');
+        var startScreen = document.getElementById('startScreen');
+        video.play();
+        startScreen.style.display = 'none';
+
+        setTimeout(createButton, 45000);
+    });
+</script>
 </body>
 
 </html>
