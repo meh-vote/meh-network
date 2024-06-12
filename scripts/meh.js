@@ -652,15 +652,6 @@ function animateCountUp(target) {
 }
 
 async function checkDesiredChain(_chainId = '0x2105') {
-    Toastify({
-        text: "Could not connect to a supported network. Please connect your wallet to the base network.",
-        duration: 3000,
-        gravity: "top", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        backgroundColor: "#000000",
-    }).showToast();
-
-
     await window.ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
         currChain = chainId;
     });
@@ -677,12 +668,19 @@ async function checkDesiredChain(_chainId = '0x2105') {
                 console.error(`You will need to add chain ${_chainId}`);
                 Toastify({
                     text: "You will need to add the base chain to your wallet to sign the ad.",
-                    duration: 3000,
+                    duration: 5000,
                     gravity: "top", // `top` or `bottom`
                     position: "center", // `left`, `center` or `right`
                     backgroundColor: "#ffffff",
                 }).showToast();
             }
+            Toastify({
+                text: "There was an error. Make sure your wallet is connected to meh.network.",
+                duration: 5000,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                backgroundColor: "#ffffff",
+            }).showToast();
         });
     };
     return _chainId;
