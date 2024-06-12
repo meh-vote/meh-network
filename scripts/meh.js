@@ -683,14 +683,6 @@ async function checkDesiredChain(_chainId = '0x2105') {
                     backgroundColor: "#ffffff",
                 }).showToast();
             }
-
-            Toastify({
-                text: "Could not connect to a supported network. Please connect your wallet to the base network.",
-                duration: 3000,
-                gravity: "top", // `top` or `bottom`
-                position: "center", // `left`, `center` or `right`
-                backgroundColor: "#ffffff",
-            }).showToast();
         });
     };
     return _chainId;
