@@ -17,17 +17,17 @@
 <body>
 <div class="video-container">
     <video id="video-background" preload="metadata">
-        <source src="./sigue-sigue-sputnik.mp4" type="video/mp4">
+        <source src="./chainlink-ad-01.mp4" type="video/mp4">
     </video>
     <div class="overlay">
-        <img src="meh.png" alt="Meh Logo" class="logo">
+        <img src="/images/meh.png" alt="Meh Logo" class="logo">
         <div id="sign_ad">
-            <div id="count-up" class="count-up">25,000 MEH</div>
+            <div id="count-up" class="count-up">50,000 - 550,000 MEH</div>
         </div>
     </div>
 </div>
 <div class="start-screen" id="startScreen">
-    <div class="start-button" id="startButton">PLAY</div>
+    <img class="start-button" id="startButton" src="/images/play.png">
 </div>
 <script>
     document.getElementById('startButton').addEventListener('click', function() {
@@ -36,7 +36,7 @@
         video.play();
         startScreen.style.display = 'none';
 
-        setTimeout(createButton, 45000);
+        setTimeout(createButton, 16000);
     });
 </script>
 </body>

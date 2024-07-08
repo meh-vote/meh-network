@@ -282,16 +282,15 @@ async function createButton() {
     await displayMeh();
     await checkDesiredChain();
 
-    const button = document.createElement('button');
-    button.innerText = `SIGN AD`;
-    button.classList.add('sign-button');
-    button.addEventListener('click', () => {
-        button.innerText = `SIGNED`;
+    const img = document.createElement('img');
+    img.src = `/images/sign_ad.png`;
+    img.classList.add('sign-button');
+    img.addEventListener('click', () => {
         signAd();
     });
 
         const signDiv = document.getElementById('sign_ad');
-        signDiv.insertAdjacentElement('afterbegin', button); // Append to overlay on larger screens
+        signDiv.insertAdjacentElement('afterbegin', img); // Append to overlay on larger screens
 }
 
 async function signAd() {
@@ -303,6 +302,13 @@ async function signAd() {
 
         const result = await mehAd.methods.signAd(1, EMPTY_PROOF).send({ from: accounts[0] });
         console.log(result);
+        Toastify({
+            text: "Signed",
+            duration: 5000,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            backgroundColor: "#ffffff",
+        }).showToast();
     } catch (error) {
         console.error(error);
     }
