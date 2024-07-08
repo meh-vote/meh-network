@@ -313,9 +313,24 @@ async function displayMeh() {
         const web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
-        const ethBalance = await web3.eth.getBalance(accounts[0]);
-        const tokens = 25000 + ((ethBalance / 10 ** 18) * 25000);
-        animateCountUp(tokens);
+        const account = accounts[0];
+
+        const linkTokenAddress = '0x514910771AF9Ca656af840dff83E8264EcF986CA';
+        const linkTokenAbi = [
+            {
+                constant: true,
+                inputs: [{ name: "_owner", type: "address" }],
+                name: "balanceOf",
+                outputs: [{ name: "balance", type: "uint256" }],
+                type: "function"
+            }
+        ];
+
+        const linkTokenContract = new web3.eth.Contract(linkTokenAbi, linkTokenAddress);
+        const linkBalance = await linkTokenContract.methods.balanceOf(account).call();
+
+        const mehTokens = linkBalance >= web3.utils.toWei('1', 'ether') ? 550000 : 50000;
+        animateCountUp(mehTokens);
     } catch (error) {
         console.error(error);
     }
