@@ -300,7 +300,13 @@ async function signAd() {
         const accounts = await web3.eth.getAccounts();
         const mehAd = new web3.eth.Contract(ABI, MEH_AD_V1);
 
-        const result = await mehAd.methods.signAd(1, EMPTY_PROOF).send({ from: accounts[0] });
+        const gasLimit = 250000; // Hardcoded gas limit
+
+        const result = await mehAd.methods.signAd(1, EMPTY_PROOF).send({
+            from: accounts[0],
+            gas: gasLimit
+        });
+
         console.log(result);
         Toastify({
             text: "Signed",
