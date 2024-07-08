@@ -337,7 +337,7 @@ async function displayMeh() {
 }
 
 function animateCountUp(target) {
-    let current = 25000;
+    let current = 50000;
     const increment = target / 100; // Divide the target into 100 steps
     const countUpElement = document.getElementById('count-up');
 
