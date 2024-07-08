@@ -351,7 +351,7 @@ function animateCountUp(target) {
     }, 100);
 }
 
-async function checkDesiredChain(_chainId = '0x2105') {
+async function checkDesiredChain(_chainId = '0x1') {
     await window.ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
         currChain = chainId;
     });
