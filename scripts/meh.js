@@ -1,23 +1,33 @@
 // MEH
-const MEH_AD_V1 = "0x330C140f584389D9359F86C01801A1c605729A46"
+const MEH_AD_V1 = "0xaDe7C78f611F49BC138da123dDf7762BA1a9e6a5"
 const EMPTY_PROOF = ["0x0000000000000000000000000000000000000000000000000000000000000000"];
 const ABI = [
     {
         "inputs": [
             {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "symbol",
-                "type": "string"
+                "internalType": "address",
+                "name": "_baseContractAddress",
+                "type": "address"
             },
             {
                 "internalType": "address",
-                "name": "mehTokenAddress",
+                "name": "_router",
                 "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_linkTokenAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_ercAdAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint64",
+                "name": "_destinationChainSelector",
+                "type": "uint64"
             }
         ],
         "stateMutability": "nonpayable",
@@ -27,50 +37,31 @@ const ABI = [
         "anonymous": false,
         "inputs": [
             {
-                "indexed": true,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "messageId",
+                "type": "bytes32"
             },
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "address",
-                "name": "approved",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "Approval",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "operator",
+                "name": "sender",
                 "type": "address"
             },
             {
                 "indexed": false,
-                "internalType": "bool",
-                "name": "approved",
-                "type": "bool"
+                "internalType": "uint256",
+                "name": "fees",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "linkBalance",
+                "type": "uint256"
             }
         ],
-        "name": "ApprovalForAll",
+        "name": "MessageSent",
         "type": "event"
     },
     {
@@ -93,99 +84,26 @@ const ABI = [
         "type": "event"
     },
     {
-        "anonymous": false,
-        "inputs": [
+        "inputs": [],
+        "name": "baseContractAddress",
+        "outputs": [
             {
-                "indexed": true,
                 "internalType": "address",
-                "name": "from",
+                "name": "",
                 "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
             }
         ],
-        "name": "Transfer",
-        "type": "event"
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "inputs": [],
-        "name": "adAmt",
+        "name": "destinationChainSelector",
         "outputs": [
             {
-                "internalType": "uint256",
+                "internalType": "uint64",
                 "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "approve",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "discounts",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
+                "type": "uint64"
             }
         ],
         "stateMutability": "view",
@@ -233,91 +151,13 @@ const ABI = [
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getApproved",
+        "inputs": [],
+        "name": "ercAdContract",
         "outputs": [
             {
-                "internalType": "address",
+                "internalType": "contract IERCAd",
                 "name": "",
                 "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "proof",
-                "type": "bytes32[]"
-            }
-        ],
-        "name": "hasSignedAd",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            }
-        ],
-        "name": "isApprovedForAll",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "proof",
-                "type": "bytes32[]"
-            }
-        ],
-        "name": "isInAudience",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
             }
         ],
         "stateMutability": "view",
@@ -325,25 +165,12 @@ const ABI = [
     },
     {
         "inputs": [],
-        "name": "mehToken",
+        "name": "linkToken",
         "outputs": [
             {
                 "internalType": "contract IERC20",
                 "name": "",
                 "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -363,17 +190,18 @@ const ABI = [
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "ownerOf",
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "router",
         "outputs": [
             {
-                "internalType": "address",
+                "internalType": "contract IRouterClient",
                 "name": "",
                 "type": "address"
             }
@@ -382,106 +210,33 @@ const ABI = [
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "eth",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "link",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct MehAdV2.CrossChainCapital",
+                "name": "message",
+                "type": "tuple"
             }
         ],
-        "name": "safeTransferFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes",
-                "name": "data",
-                "type": "bytes"
-            }
-        ],
-        "name": "safeTransferFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "adURI",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "dataURI",
-                "type": "string"
-            },
+        "name": "sendMessage",
+        "outputs": [
             {
                 "internalType": "bytes32",
-                "name": "signatureRoot",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "audienceRoot",
+                "name": "messageId",
                 "type": "bytes32"
             }
         ],
-        "name": "setAd",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "internalType": "bool",
-                "name": "approved",
-                "type": "bool"
-            }
-        ],
-        "name": "setApprovalForAll",
-        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
@@ -506,80 +261,6 @@ const ABI = [
     {
         "inputs": [
             {
-                "internalType": "bytes4",
-                "name": "interfaceId",
-                "type": "bytes4"
-            }
-        ],
-        "name": "supportsInterface",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "symbol",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "tokenURI",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
-        ],
-        "name": "transferFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "address",
                 "name": "newOwner",
                 "type": "address"
@@ -589,6 +270,10 @@ const ABI = [
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "stateMutability": "payable",
+        "type": "receive"
     }
 ]
 
