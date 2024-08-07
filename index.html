@@ -5,40 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>//MEH</title>
-    <link rel="stylesheet" href="meh.css">
-    <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-    <script src="scripts/meh.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <title>meh.network</title>
+    <style>
+        body {
+            background-color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        img {
+            height: 95vh;
+            width: auto;
+        }
+    </style>
 </head>
 
 <body>
-<div class="video-container">
-    <video id="video-background" preload="metadata">
-        <source src="./chainlink-ad-01.mp4" type="video/mp4">
-    </video>
-    <div class="overlay">
-        <img src="/images/meh.png" alt="Meh Logo" class="logo">
-        <div id="sign_ad">
-            <div id="count-up" class="count-up">0 - 550,000 MEH</div>
-        </div>
-    </div>
-</div>
-<div class="start-screen" id="startScreen">
-    <img class="start-button" id="startButton" src="/images/play.png">
-</div>
-<script>
-    document.getElementById('startButton').addEventListener('click', function() {
-        var video = document.getElementById('video-background');
-        var startScreen = document.getElementById('startScreen');
-        video.play();
-        startScreen.style.display = 'none';
-
-        setTimeout(createButton, 16000);
-    });
-</script>
+    <a href="https://meh.store/?applyDiscount=true">
+        <img src="/images/Meh_1336B.png" alt="25% off">
+    </a>
 </body>
 
 </html>
